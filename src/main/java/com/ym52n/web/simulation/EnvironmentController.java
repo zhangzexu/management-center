@@ -19,14 +19,16 @@ import java.util.Date;
 @RestController
 public class EnvironmentController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    private DecimalFormat df = new DecimalFormat("#.00");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Autowired
     RedisTemplate redisTemplate;
     //登录成功后返回的json数据
     @RequestMapping(Const.SIMULATION_ENVIRONMENT+"makeData.json")
     public Response mkaeData(Integer continuedTime,Integer sleep){
         continuedTime = continuedTime*60;
-        DecimalFormat df = new DecimalFormat("#.00");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         String temperature =null;
         String dampness =null;
         String lx =null;
@@ -66,6 +68,41 @@ public class EnvironmentController {
 
         }
 
+        return new Response(ExceptionMsg.SUCCESS);
+    }
+
+
+
+
+    @RequestMapping(Const.SIMULATION_ENVIRONMENT+"makeMoistureData.json")
+    public Response makeMoistureData(Integer continuedTime,Integer sleep){
+        continuedTime = continuedTime*60;
+        String soilSaturatedWaterContent =null;
+        String waterHoldingField =null;
+        String coefficientImpotence = null;
+
+
+        while(continuedTime>0){
+            Date d = new Date();
+            soilSaturatedWaterContent = df.format(Math.random()*100);
+            waterHoldingField = df.format((-100.00)+Math.random()*400);
+            coefficientImpotence = df.format((-10.00)+Math.random()*100);
+            continuedTime--;
+            log.info("开始redis存入数据");
+            HashOperations hashOperations = redisTemplate.opsForHash();
+            hashOperations.put("soilSaturatedWaterContent",sdf.format(d),soilSaturatedWaterContent);
+            log.info("soilSaturatedWaterContent--{}--{}",sdf.format(d),soilSaturatedWaterContent);
+            hashOperations.put("waterHoldingField",sdf.format(d),waterHoldingField);
+            log.info("waterHoldingField--{}--{}",sdf.format(d),waterHoldingField);
+            hashOperations.put("coefficientImpotence",sdf.format(d),coefficientImpotence);
+            log.info("coefficientImpotence--{}--{}",sdf.format(d),coefficientImpotence);
+            log.info("结束redis存入数据");
+            try{
+                Thread.sleep(sleep*1000);
+            }catch (Exception e){
+
+            }
+        }
         return new Response(ExceptionMsg.SUCCESS);
     }
 }

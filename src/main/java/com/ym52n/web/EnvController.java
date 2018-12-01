@@ -8,8 +8,6 @@ import com.ym52n.domain.result.Response;
 import com.ym52n.domain.result.ResponseData;
 import com.ym52n.domain.result.ResponsePageData;
 import com.ym52n.service.EnvironmentService;
-
-import com.ym52n.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +78,6 @@ public class EnvController {
         String[] uids = request.getParameter("dataValue").split(",");
         if(!environmentService.deleteUid(uids))
             return new Response(ExceptionMsg.FAILED);
-
         return new Response(ExceptionMsg.SUCCESS);
     }
 
@@ -93,7 +90,6 @@ public class EnvController {
         environment.setLastModifiedDate(oldEnvironment.getLastModifiedDate());
         if(!environmentService.update(environment))
             return new Response(ExceptionMsg.FAILED);
-
         return new Response(ExceptionMsg.SUCCESS);
     }
 

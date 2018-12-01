@@ -1,7 +1,9 @@
 package com.ym52n.schedule;
 
 import com.ym52n.domain.Environment;
+import com.ym52n.domain.SoilMoisture;
 import com.ym52n.service.EnvironmentService;
+import com.ym52n.service.SoilMoistureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,10 @@ public class CleraRedis {
     RedisTemplate redisTemplate;
     @Autowired
     EnvironmentService environmentService;
+    @Autowired
+    SoilMoistureService soilMoistureService;
     @Scheduled(initialDelay=1000, fixedDelay=60*1000*30)
-    public void cleraRedis(){
+    public void cleraRedisEnvironment(){
         log.info("redis clera 开始------");
         List<String> list = new Vector<>();
         list.add("temperature");
@@ -57,7 +61,36 @@ public class CleraRedis {
             environment.setWater(waters.get(key));
             environment.setPpm(ppms.get(key));
             environmentService.save(environment);
+        }
+        log.info("redis cler 入库 结束------");
+        redisTemplate.delete(list);
+        log.info("redis clera 结束--------");
+    }
 
+
+    @Scheduled(initialDelay=1000, fixedDelay=60*1000*30)
+    public void cleraRedisSoilMoisture(){
+        log.info("redis clera 开始------");
+        List<String> list = new Vector<>();
+        list.add("soilSaturatedWaterContent");
+        list.add("waterHoldingField");
+        list.add("coefficientImpotence");
+        SoilMoisture soilMoisture = null;
+        Map<String,String> soilSaturatedWaterContent =redisTemplate.opsForHash().entries("soilSaturatedWaterContent");
+        Map<String,String> waterHoldingField =redisTemplate.opsForHash().entries("waterHoldingField");
+        Map<String,String> coefficientImpotence =redisTemplate.opsForHash().entries("coefficientImpotence");
+        Set<String> sets = new TreeSet<>();
+        sets.addAll(soilSaturatedWaterContent.keySet());
+        sets.addAll(waterHoldingField.keySet());
+        sets.addAll(coefficientImpotence.keySet());
+        log.info("redis cler 入库 开始------");
+        for (String key: sets) {
+            soilMoisture = new SoilMoisture();
+            soilMoisture.setDate(key);
+            soilMoisture.setSoilSaturatedWaterContent(soilSaturatedWaterContent.get(key));
+            soilMoisture.setWaterHoldingField(waterHoldingField.get(key));
+            soilMoisture.setCoefficientImpotence(coefficientImpotence.get(key));
+            soilMoistureService.save(soilMoisture);
         }
         log.info("redis cler 入库 结束------");
         redisTemplate.delete(list);
