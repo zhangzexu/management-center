@@ -1,6 +1,7 @@
 package com.ym52n.web;
 
 import com.ym52n.domain.Crops;
+import com.ym52n.domain.SysRole;
 import com.ym52n.domain.result.ExceptionMsg;
 import com.ym52n.domain.result.Response;
 import com.ym52n.domain.result.ResponsePageData;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,16 +23,14 @@ import javax.servlet.http.HttpServletRequest;
  * @Date 2018/12/2 17:31
  * @Version V1.0
  */
+@RestController
 public class CropsController extends BaseController {
-
-    public static void main(String[] args) {
-        System.out.println(new Integer("-1"));
-    }
 
     @Autowired
     CropsService cropsService;
-    @RequestMapping(Const.PAGE_PRODUCTS+"getCropsList.json")
-    public ResponsePageData getCropsList(HttpServletRequest request) throws Exception{
+
+    @RequestMapping(Const.PAGE_PRODUCTS+"cropsList.json")
+    public ResponsePageData cropsList(HttpServletRequest request){
         Integer limit = Integer.parseInt(request.getParameter("limit"));
         Integer page = Integer.parseInt(request.getParameter("page"))-1;
         String nameCn = request.getParameter("nameCn");
@@ -48,7 +48,16 @@ public class CropsController extends BaseController {
 
         return new ResponsePageData(ExceptionMsg.LayuiPageSuccess,cropsPage.getContent(),cropsPage.getTotalElements());
     }
-    @PostMapping(Const.SIMULATION_ENVIRONMENT+"cropsDelete.json")
+
+    @PostMapping(Const.PAGE_PRODUCTS+"cropsAdd.json")
+    public Response cropsAdd(@RequestBody Crops crops){
+        if(cropsService.save(crops)){
+            return new Response(ExceptionMsg.SUCCESS);
+        }
+        return new Response(ExceptionMsg.FAILED);
+    }
+
+    @PostMapping(Const.PAGE_PRODUCTS+"cropsDelete.json")
     public Response environmentDelete(HttpServletRequest request) {
         String[] uids = request.getParameter("dataValue").split(",");
         if(!cropsService.deleteUid(uids))
@@ -56,7 +65,7 @@ public class CropsController extends BaseController {
         return new Response(ExceptionMsg.SUCCESS);
     }
 
-    @PostMapping(Const.SIMULATION_ENVIRONMENT+"cropsUpdate.json")
+    @PostMapping(Const.PAGE_PRODUCTS+"cropsUpdate.json")
     public Response environmentUpdate(@RequestBody Crops crops) {
         Crops oldCrops = cropsService.findByUid(crops.getUid());
         crops.setCreateBy(oldCrops.getCreateBy());

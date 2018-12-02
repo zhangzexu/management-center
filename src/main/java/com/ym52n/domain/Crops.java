@@ -46,8 +46,8 @@ public class Crops extends Entitys implements Serializable {
     private Integer isOrganic = 0;
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '种子种类'")
     private String cropsType;
-    @Column(nullable = false,columnDefinition ="int(10) COMMENT '果实收获次数有：可收获果实三次或者3-10次'")
-    private Integer harvestTimes;
+    @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '果实收获次数有：可收获果实三次或者3-10次'")
+    private String harvestTimes;
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '种子的收获频率:有15天一次，一个月一次'")
     private String harvestFrequency;//收获频率
     //成长阶段
@@ -130,11 +130,11 @@ public class Crops extends Entitys implements Serializable {
         this.cropsType = cropsType;
     }
 
-    public Integer getHarvestTimes() {
+    public String getHarvestTimes() {
         return harvestTimes;
     }
 
-    public void setHarvestTimes(Integer harvestTimes) {
+    public void setHarvestTimes(String harvestTimes) {
         this.harvestTimes = harvestTimes;
     }
 

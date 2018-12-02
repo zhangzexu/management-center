@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -27,6 +28,7 @@ import java.util.List;
  * @Date 2018/12/2 17:07
  * @Version V1.0
  */
+@Service
 public class CropsServiceImpl implements CropsService {
 
     @Autowired

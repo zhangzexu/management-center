@@ -53,8 +53,91 @@ public class GrowthPhase extends Entitys implements Serializable {
     @Column(nullable = false)
     private String lastModifiedBy;
 
+    public String getUid() {
+        return uid;
+    }
 
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
+    public String getSow() {
+        return sow;
+    }
 
+    public void setSow(String sow) {
+        this.sow = sow;
+    }
 
+    public String getFertilize() {
+        return fertilize;
+    }
+
+    public void setFertilize(String fertilize) {
+        this.fertilize = fertilize;
+    }
+
+    public String getBlossom() {
+        return blossom;
+    }
+
+    public void setBlossom(String blossom) {
+        this.blossom = blossom;
+    }
+
+    public String getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(String outcome) {
+        this.outcome = outcome;
+    }
+
+    public String getHarvest() {
+        return harvest;
+    }
+
+    public void setHarvest(String harvest) {
+        this.harvest = harvest;
+    }
+
+    public String getDescInfo() {
+        return descInfo;
+    }
+
+    public void setDescInfo(String descInfo) {
+        this.descInfo = descInfo;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(String lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
 }
