@@ -27,11 +27,15 @@ public class GrowthPhase extends Entitys implements Serializable {
     @GeneratedValue(generator = "uid")
     @GenericGenerator(name = "uid", strategy = "com.ym52n.repository.impl.MakeUid")
     private String uid;
-
+    @Column(nullable = false,columnDefinition ="varchar(100) COMMENT '播种时间'")
     private String sow;
+    @Column(nullable = false,columnDefinition ="varchar(100) COMMENT '施肥阶段和频次'")
     private String fertilize;
+    @Column(nullable = false,columnDefinition ="varchar(100) COMMENT '开花时间'")
     private String blossom;
+    @Column(nullable = false,columnDefinition ="varchar(100) COMMENT '结果时间'")
     private String outcome;
+    @Column(nullable = false,columnDefinition ="varchar(50) COMMENT '收获时间，每年7-9月份'")
     private String harvest;
 
     @Column(length = 65535,columnDefinition="Text")

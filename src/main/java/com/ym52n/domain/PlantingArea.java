@@ -9,7 +9,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,23 +39,23 @@ public class PlantingArea extends Entitys implements Serializable {
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '灌溉类型:可选值有喷灌、。。、其他'")
     private String irrigationType;
     @OneToMany(fetch= FetchType.EAGER)
-    @JoinColumn(name="crops_uid")
+    @JoinColumn(name="plantingArea_uid")
     private List<Crops> optionalCrops;
 
     @Column(nullable = false,columnDefinition ="int(2) COMMENT '现在是否种植作物:可选值有 0 没有种植，1种植'")
     private Integer isPlant=0;
-    @OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name="crops_uid")//注释本表中指向另一个表的外键。
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="plantingCrops_uid")//注释本表中指向另一个表的外键。
     private Crops plantingCrops;
-    @Column(columnDefinition ="COMMENT '种植时间'")
-    private Date plantDate;
+    @Column(columnDefinition ="varchar(30) COMMENT '种植时间'")
+    private String plantDate;
     @Column(columnDefinition ="varchar(100) COMMENT '作物现在达到的阶段'")
     private String plantStage;
 
     @Column(length = 65535,columnDefinition ="Text COMMENT '区域简介'")
     private String describes;
 
-    private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会用于种植
+    private Integer available = 0; // 是否可用,如果不可用将不会用于种植
     @Column(length = 65535,columnDefinition="Text COMMENT '备注'")
     private String descInfo;
     @CreatedDate
@@ -160,14 +159,6 @@ public class PlantingArea extends Entitys implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
-
     public List<Crops> getOptionalCrops() {
         return optionalCrops;
     }
@@ -184,11 +175,11 @@ public class PlantingArea extends Entitys implements Serializable {
         this.plantingCrops = plantingCrops;
     }
 
-    public Date getPlantDate() {
+    public String getPlantDate() {
         return plantDate;
     }
 
-    public void setPlantDate(Date plantDate) {
+    public void setPlantDate(String plantDate) {
         this.plantDate = plantDate;
     }
 
@@ -198,5 +189,13 @@ public class PlantingArea extends Entitys implements Serializable {
 
     public void setPlantStage(String plantStage) {
         this.plantStage = plantStage;
+    }
+
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
     }
 }
