@@ -2,7 +2,6 @@ package com.ym52n.service;
 
 import com.ym52n.domain.SoilMoisture;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 public interface SoilMoistureService {
     public SoilMoisture findByUid(String uid);
