@@ -129,7 +129,26 @@
             <artifactId>nekohtml</artifactId>
             <version>1.9.22</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.4</version>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Dalston.SR5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
 
     <build>
         <plugins>
@@ -140,5 +159,19 @@
         </plugins>
         <finalName>management-center</finalName>
     </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://119.29.205.80:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id> snapshots </id>
+            <name> Nexus Snapshot Repository </name>
+            <url>http://119.29.205.80:8081/nexus/content/repositories/snapshots/ </url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>

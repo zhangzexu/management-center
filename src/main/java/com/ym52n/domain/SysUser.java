@@ -19,26 +19,28 @@ public class SysUser extends Entitys implements Serializable {
     @GenericGenerator(name = "uid", strategy = "com.ym52n.repository.impl.MakeUid")
     private String uid;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true,columnDefinition = "COMMENT '用户名称'")
     private String userName;
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "COMMENT '用户密码'")
     private String password;
+    @Column(nullable = false,columnDefinition = "COMMENT '加密密码盐'")
     private String salt;//加密密码的盐
+    @Column(nullable = false,columnDefinition = "COMMENT '用户状态'")
     private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
     @ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
     @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "userUid") }, inverseJoinColumns ={@JoinColumn(name = "roleUid") })
     private List<SysRole> roleList;// 一个用户具有多个角色
 
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false,unique = true,columnDefinition = "COMMENT '用户邮箱'")
     private String email;
-    @Column(unique = true)
+    @Column(unique = true,columnDefinition = "COMMENT '用户手机号'")
     private String phone;
-
+    @Column(columnDefinition = "COMMENT '用户头像'")
     private String profilePicture;//用户头像
-    @Column(length = 65535,columnDefinition="Text")
+    @Column(length = 65535,columnDefinition="Text COMMENT '用户简介'")
     private String introduction;//用户简介
-
+    @Column(columnDefinition="COMMENT '退出时间'")
     private String outDate;
     private String validataCode;
     private String backgroundPicture;

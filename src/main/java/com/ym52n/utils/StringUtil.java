@@ -22,7 +22,8 @@ public class StringUtil {
 		return result;
 	}
 	public static String getUid(){
-		return System.currentTimeMillis()+MD5Util.encrypt(UUID.randomUUID().toString());
+		int index = (int)Math.random()*25;
+		return System.currentTimeMillis()+MD5Util.encrypt(UUID.randomUUID().toString().substring(index,index+6));
 	}
 
 }
