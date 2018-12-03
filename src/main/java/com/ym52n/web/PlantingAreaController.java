@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Version V1.0
  */
 @RestController
-public class PlantingController extends BaseController{
+public class PlantingAreaController extends BaseController{
     @Autowired
     PlantingAreaService plantingAreaService;
 

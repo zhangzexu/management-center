@@ -30,7 +30,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Service
-public class PlantingServiceImpl implements PlantingAreaService {
+public class PlantingAreaServiceImpl implements PlantingAreaService {
     @Autowired
     PlantingAreaDao plantingAreaDao;
     @Override
