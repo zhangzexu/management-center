@@ -1,7 +1,6 @@
 package com.ym52n.web;
 
 import com.ym52n.domain.Crops;
-import com.ym52n.domain.SysRole;
 import com.ym52n.domain.result.ExceptionMsg;
 import com.ym52n.domain.result.Response;
 import com.ym52n.domain.result.ResponsePageData;
@@ -35,15 +34,16 @@ public class CropsController extends BaseController {
         Integer page = Integer.parseInt(request.getParameter("page"))-1;
         String nameCn = request.getParameter("nameCn");
         String nameEn = request.getParameter("nameEn");
-        Integer isOrganic = new Integer(request.getParameter("isOrganic"));
+        String isOrganic = request.getParameter("isOrganic");
         String cropsType = request.getParameter("cropsType");
-        Integer available = new Integer(request.getParameter("available"));
+        String available = request.getParameter("available");
         Crops crops = new Crops();
         crops.setAvailable(available);
         crops.setCropsType(cropsType);
         crops.setIsOrganic(isOrganic);
         crops.setNameCn(nameCn);
         crops.setNameEn(nameEn);
+        logger.info(crops.toString());
         Page<Crops> cropsPage = cropsService.findAll(crops,page,limit);
 
         return new ResponsePageData(ExceptionMsg.LayuiPageSuccess,cropsPage.getContent(),cropsPage.getTotalElements());
@@ -70,8 +70,7 @@ public class CropsController extends BaseController {
         Crops oldCrops = cropsService.findByUid(crops.getUid());
         crops.setCreateBy(oldCrops.getCreateBy());
         crops.setCreateDate(oldCrops.getCreateDate());
-        crops.setLastModifiedBy(oldCrops.getLastModifiedBy());
-        crops.setLastModifiedDate(oldCrops.getLastModifiedDate());
+
         if(!cropsService.update(crops))
             return new Response(ExceptionMsg.FAILED);
         return new Response(ExceptionMsg.SUCCESS);

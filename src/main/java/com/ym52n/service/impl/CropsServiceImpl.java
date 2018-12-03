@@ -79,14 +79,14 @@ public class CropsServiceImpl implements CropsService {
                 if(!StringUtils.isBlank(crops.getNameEn())){
                     predicates.add(criteriaBuilder.like(root.get("nameEn").as(String.class),"%"+crops.getNameEn()+"%"));
                 }
-                if(crops.getIsOrganic()!=-1){
-                    predicates.add(criteriaBuilder.equal(root.get("isOrganic").as(Integer.class),crops.getIsOrganic()));
+                if(!StringUtils.isBlank(crops.getIsOrganic())){
+                    predicates.add(criteriaBuilder.equal(root.get("isOrganic").as(String.class),crops.getIsOrganic()));
                 }
-                if(StringUtils.isBlank(crops.getCropsType())){
+                if(!StringUtils.isBlank(crops.getCropsType())){
                     predicates.add(criteriaBuilder.equal(root.get("cropsType").as(String.class),crops.getCropsType()));
                 }
-                if(crops.getAvailable()!=-1){
-                    predicates.add(criteriaBuilder.equal(root.get("available").as(Boolean.class),crops.getAvailable()));
+                if(!StringUtils.isBlank(crops.getAvailable())){
+                    predicates.add(criteriaBuilder.equal(root.get("available").as(String.class),crops.getAvailable()));
                 }
                 Predicate[] pre = new Predicate[predicates.size()];
                 return criteriaQuery.where(predicates.toArray(pre)).getRestriction();

@@ -42,8 +42,8 @@ public class PlantingArea extends Entitys implements Serializable {
     @JoinColumn(name="plantingArea_uid")
     private List<Crops> optionalCrops;
 
-    @Column(nullable = false,columnDefinition ="int(2) COMMENT '现在是否种植作物:可选值有 0 没有种植，1种植'")
-    private Integer isPlant=0;
+    @Column(nullable = false,columnDefinition ="varchar(2) COMMENT '现在是否种植作物:可选值有 0 没有种植，1种植'")
+    private String isPlant="0";
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="plantingCrops_uid")//注释本表中指向另一个表的外键。
     private Crops plantingCrops;
@@ -55,7 +55,7 @@ public class PlantingArea extends Entitys implements Serializable {
     @Column(length = 65535,columnDefinition ="Text COMMENT '区域简介'")
     private String describes;
 
-    private Integer available = 0; // 是否可用,如果不可用将不会用于种植
+    private String available = "0"; // 是否可用,如果不可用将不会用于种植
     @Column(length = 65535,columnDefinition="Text COMMENT '备注'")
     private String descInfo;
     @CreatedDate
@@ -103,12 +103,20 @@ public class PlantingArea extends Entitys implements Serializable {
         this.irrigationType = irrigationType;
     }
 
-    public Integer getIsPlant() {
+    public String getIsPlant() {
         return isPlant;
     }
 
-    public void setIsPlant(Integer isPlant) {
+    public void setIsPlant(String isPlant) {
         this.isPlant = isPlant;
+    }
+
+    public String getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(String available) {
+        this.available = available;
     }
 
     public String getDescribes() {
@@ -191,11 +199,4 @@ public class PlantingArea extends Entitys implements Serializable {
         this.plantStage = plantStage;
     }
 
-    public Integer getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Integer available) {
-        this.available = available;
-    }
 }

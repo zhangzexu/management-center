@@ -41,9 +41,9 @@ public class Crops extends Entitys implements Serializable {
     @Column(unique = true,columnDefinition ="varchar(20) COMMENT '种子的展示图片'")
     private String cropsIcon;
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '种子价格'")
-    private String cropssPrice;
+    private String cropsPrice;
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '是否为有机种子默认为0不是有机种子'")
-    private Integer isOrganic = 0;
+    private String isOrganic = "0";
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '种子种类'")
     private String cropsType;
     @Column(nullable = false,columnDefinition ="varchar(30) COMMENT '果实收获次数有：可收获果实三次或者3-10次'")
@@ -58,7 +58,7 @@ public class Crops extends Entitys implements Serializable {
     @Column(length = 65535,columnDefinition ="Text COMMENT '种子简介'")
     private String describes;
 
-    private Integer available = 0; //0不可用，1是可用  是否可用,如果不可用将不会用于种植
+    private String available = "0"; //0不可用，1是可用  是否可用,如果不可用将不会用于种植
     @Column(length = 65535,columnDefinition="Text")
     private String descInfo;
     @CreatedDate
@@ -106,22 +106,13 @@ public class Crops extends Entitys implements Serializable {
         this.cropsIcon = cropsIcon;
     }
 
-    public String getCropssPrice() {
-        return cropssPrice;
+    public String getCropsPrice() {
+        return cropsPrice;
     }
 
-    public void setCropssPrice(String cropssPrice) {
-        this.cropssPrice = cropssPrice;
+    public void setCropsPrice(String cropsPrice) {
+        this.cropsPrice = cropsPrice;
     }
-
-    public Integer getIsOrganic() {
-        return isOrganic;
-    }
-
-    public void setIsOrganic(Integer isOrganic) {
-        this.isOrganic = isOrganic;
-    }
-
     public String getCropsType() {
         return cropsType;
     }
@@ -162,11 +153,19 @@ public class Crops extends Entitys implements Serializable {
         this.describes = describes;
     }
 
-    public Integer getAvailable() {
+    public String getIsOrganic() {
+        return isOrganic;
+    }
+
+    public void setIsOrganic(String isOrganic) {
+        this.isOrganic = isOrganic;
+    }
+
+    public String getAvailable() {
         return available;
     }
 
-    public void setAvailable(Integer available) {
+    public void setAvailable(String available) {
         this.available = available;
     }
 
